@@ -1,0 +1,3 @@
+[
+    { "keys": ["shift+super+d"], "command": "drush" }
+]

@@ -1,0 +1,18 @@
+{
+    /**
+     * How should the plugin invoke your drush executable.
+     *
+     * This can be the name of the executable if its in your path,
+     * or it can be the absolute path to it.
+     *
+     * You can find where your executable is by running "which drush"
+     * in your terminal.
+     *
+     * Defaults:
+     *   Windows   -> 'drush.bat'
+     *   Linux/OSX -> 'drush'
+     */
+    "drush_executable": "",
+
+    "drush_args": ""
+}
