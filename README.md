@@ -26,7 +26,7 @@ Alternatively you can clone with git directly into `Packages` directory in the S
 
 Go to your Sublime Text 2 `Packages` directory and clone the repository using the command below:
 
-    git clone https://github.com/SublimeText/sublime_drush "Drush"
+    git clone https://github.com/vaanwd/sublime_drush "Drush"
 
 ### Download Manually
 
