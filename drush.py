@@ -14,13 +14,14 @@ class DrushCommand(sublime_plugin.TextCommand):
   DEFAULT_DRUSH_ARGS = ''
   SETTINGS = sublime.load_settings("Drush.sublime-settings")
   view_panel = None
+  last_cmd = ''
 
   def run(self, edit):
     view = self.view
     self.working_dirs = view.window().folders()
     if len(self.working_dirs) > 0:
       self.path = self.working_dirs[0]
-      self.view_panel = view.window().show_input_panel('drush', '', self.after_input, self.on_change, None)
+      self.view_panel = view.window().show_input_panel('drush', self.last_cmd, self.after_input, self.on_change, None)
       self.view_panel.set_name('drush_command_bar')
     else:
       sublime.message_dialog('No opened project was found!\nPlease open a Drupal project!')
@@ -35,6 +36,9 @@ class DrushCommand(sublime_plugin.TextCommand):
   def on_change(self, text):
     if text.strip() == "":
       return
+
+    if self.SETTINGS.get('remember_last_command') or True :
+      self.last_cmd = text.strip()
 
   def _runDrush(self, text):
     try:

@@ -14,5 +14,7 @@
      */
     "drush_executable": "",
 
-    "drush_args": ""
+    "drush_args": "",
+
+    "remember_last_command": ""
 }
