@@ -152,8 +152,31 @@ class DrushCommand(sublime_plugin.TextCommand):
 
   def _get_drush_sup_project_args(self):
     p_drush_args = self.getProjectJson()
-    if 'settings' in p_drush_args:
-      if 'Drush' in p_drush_args['settings']:
-        if 'drush_args' in p_drush_args['settings']['Drush']:
-          return p_drush_args['settings']['Drush']['drush_args']
+    if p_drush_args:
+      if 'settings' in p_drush_args:
+        if 'Drush' in p_drush_args['settings']:
+          if 'drush_args' in p_drush_args['settings']['Drush']:
+            return p_drush_args['settings']['Drush']['drush_args']
     return ''
+
+class DrushEvents(sublime_plugin.EventListener):
+  def on_post_save(self, view):
+    dc = DrushCommand(view)
+    drupal_dir = self._get_drupal_path(view.file_name())
+
+    if drupal_dir != False:
+      command = "cc all --root=%s" % drupal_dir
+      dc._runDrush(command)
+
+      view.set_status("drush_save_event", "Drush command executed: %s" % command)
+
+  def _get_drupal_path(self, file_path):
+    top_level_paths = ['sites/all', 'sites/default']
+
+    for tl in top_level_paths:
+      index = file_path.find(tl)
+      
+      if index > -1:
+        return file_path[0:index]
+      else:
+        return False
