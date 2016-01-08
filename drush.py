@@ -148,7 +148,13 @@ class DrushCommand(sublime_plugin.TextCommand):
       return sublime.active_window().project_data()
 
   def _get_drush_sup_args(self):
-    return self.SETTINGS.get('drush_args')
+    drush_args = self.SETTINGS.get('drush_args')
+    
+    if drush_args:
+      return drush_args
+    else:
+      return ''
+
 
   def _get_drush_sup_project_args(self):
     p_drush_args = self.getProjectJson()
