@@ -168,13 +168,15 @@ class DrushCommand(sublime_plugin.TextCommand):
 class DrushEvents(sublime_plugin.EventListener):
   def on_post_save(self, view):
     dc = DrushCommand(view)
-    drupal_dir = self._get_drupal_path(view.file_name())
 
-    if drupal_dir != False:
-      command = "cc all --root=%s" % drupal_dir
-      dc._runDrush(command)
+    if dc.SETTINGS.get('cc_all_on_save'):
+      drupal_dir = self._get_drupal_path(view.file_name())
 
-      view.set_status("drush_save_event", "Drush command executed: %s" % command)
+      if drupal_dir != False:
+        command = "cc all --root=%s" % drupal_dir
+        dc._runDrush(command)
+
+        view.set_status("drush_save_event", "Drush command executed: %s" % command)
 
   def _get_drupal_path(self, file_path):
     top_level_paths = ['sites/all', 'sites/default']
