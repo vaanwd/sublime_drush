@@ -74,7 +74,7 @@ class DrushCommand(sublime_plugin.TextCommand):
         uri = ''
 
       import shlex
-      command_splitted = shlex.split(str(drush + ' ' + drush_args + ' ' + drush_project_args + ' ' + text.replace('\\', '/') + ' ') + root + uri)
+      command_splitted = shlex.split(str(drush + ' ' + drush_project_args + ' ' + drush_args + ' ' + text.replace('\\', '/') + ' ') + root + uri)
 
       sublime.active_window().run_command('exec', {'cmd': command_splitted, "working_dir": self.path})
 
@@ -173,7 +173,7 @@ class DrushEvents(sublime_plugin.EventListener):
       drupal_dir = self._get_drupal_path(view.file_name())
 
       if drupal_dir != False:
-        command = "cc all --root=%s" % drupal_dir
+        command = "cc all --root='%s'" % drupal_dir
         dc._runDrush(command)
 
         view.set_status("drush_save_event", "Drush command executed: %s" % command)
