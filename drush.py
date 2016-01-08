@@ -155,7 +155,6 @@ class DrushCommand(sublime_plugin.TextCommand):
     else:
       return ''
 
-
   def _get_drush_sup_project_args(self):
     p_drush_args = self.getProjectJson()
     if p_drush_args:
