@@ -175,7 +175,7 @@ class DrushEvents(sublime_plugin.EventListener):
         command = "cc all --root='%s'" % drupal_dir
         dc._runDrush(command)
 
-        view.set_status("drush_save_event", "Drush command executed: %s" % command)
+        sublime.status_message("drush_save_event", "Drush command executed: %s" % command)
 
   def _site_dir_info(self, file_path):
     top_level_paths = ['sites', 'modules']
