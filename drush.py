@@ -175,7 +175,11 @@ class DrushEvents(sublime_plugin.EventListener):
         command = "cc all --root='%s'" % drupal_dir
         dc._runDrush(command)
 
-        sublime.status_message("drush_save_event", "Drush command executed: %s" % command)
+        # close the console window that automatically opens
+        # TODO: this does not close the window, fix this
+        # sublime.active_window().run_command('show_console', { 'panel': 'console', 'toggle': True })
+        # show user the status message
+        sublime.status_message("Drush command executed: %s" % command)
 
   def _site_dir_info(self, file_path):
     top_level_paths = ['sites', 'modules']
@@ -186,7 +190,7 @@ class DrushEvents(sublime_plugin.EventListener):
       if index > -1:
         return (os.path.isfile(file_path[0:index] + 'authorize.php'), file_path[0:index])
     
-    return False
+    return (False, None)
 
   def _get_site_home_dir(self, file_path):
     info = self._site_dir_info(file_path)
