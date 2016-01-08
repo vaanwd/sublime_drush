@@ -170,7 +170,7 @@ class DrushEvents(sublime_plugin.EventListener):
     dc = DrushCommand(view)
 
     if dc.SETTINGS.get('cc_all_on_save'):
-      drupal_dir = self._get_drupal_path(view.file_name())
+      drupal_dir = self._get_site_home_dir(view.file_name())
 
       if drupal_dir != False:
         command = "cc all --root='%s'" % drupal_dir
@@ -178,13 +178,22 @@ class DrushEvents(sublime_plugin.EventListener):
 
         view.set_status("drush_save_event", "Drush command executed: %s" % command)
 
-  def _get_drupal_path(self, file_path):
-    top_level_paths = ['sites/all', 'sites/default']
-
+  def _site_dir_info(self, file_path):
+    top_level_paths = ['sites', 'modules']
+    
     for tl in top_level_paths:
       index = file_path.find(tl)
-      
+
       if index > -1:
-        return file_path[0:index]
-      else:
-        return False
+        return (os.path.isfile(file_path[0:index] + 'authorize.php'), file_path[0:index])
+    
+    return False
+
+  def _get_site_home_dir(self, file_path):
+    info = self._site_dir_info(file_path)
+
+    # if the cwd is a drupal directory, return that directory
+    if info[0]:
+      return info[1]
+
+    return False
