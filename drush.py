@@ -177,7 +177,7 @@ class DrushEvents(sublime_plugin.EventListener):
 
         # close the console window that automatically opens
         # TODO: this does not close the window, fix this
-        # sublime.active_window().run_command('show_console', { 'panel': 'console', 'toggle': True })
+        #sublime.active_window().run_command('show_panel', { 'panel': 'exec', 'toggle': True })
         # show user the status message
         sublime.status_message("Drush command executed: %s" % command)
 
