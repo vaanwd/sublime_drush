@@ -49,6 +49,9 @@ For example you can set answer `"yes"` to all questions required by drush adding
 
     "drush_args": "--yes",
 
+To run a command on save, add the following:
+    
+    "exec_on_save_command": "cc all"
 
 You can also set the arguments used by drush for each Sublime project accesed from Sublime menu `Project`->`Edit Project`.
 

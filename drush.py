@@ -167,19 +167,20 @@ class DrushCommand(sublime_plugin.TextCommand):
 class DrushEvents(sublime_plugin.EventListener):
   def on_post_save(self, view):
     dc = DrushCommand(view)
+    save_cmd = dc.SETTINGS.get('exec_on_save_command')
 
-    if dc.SETTINGS.get('cc_all_on_save'):
+    if save_cmd != "":
       drupal_dir = self._get_site_home_dir(view.file_name())
 
       if drupal_dir != False:
-        command = "cc all --root='%s'" % drupal_dir
-        dc._runDrush(command)
+        shell_cmd = "%s --root='%s'" % (save_cmd, drupal_dir)
+        dc._runDrush(shell_cmd)
 
         # close the console window that automatically opens
         # TODO: this does not close the window, fix this
         #sublime.active_window().run_command('show_panel', { 'panel': 'exec', 'toggle': True })
         # show user the status message
-        sublime.status_message("Drush command executed: %s" % command)
+        sublime.status_message("Drush command executed: %s" % shell_cmd)
 
   def _site_dir_info(self, file_path):
     top_level_paths = ['sites', 'modules']
