@@ -176,9 +176,6 @@ class DrushEvents(sublime_plugin.EventListener):
         shell_cmd = "%s --root='%s'" % (save_cmd, drupal_dir)
         dc._runDrush(shell_cmd)
 
-        # close the console window that automatically opens
-        # TODO: this does not close the window, fix this
-        #sublime.active_window().run_command('show_panel', { 'panel': 'exec', 'toggle': True })
         # show user the status message
         sublime.status_message("Drush command executed: %s" % shell_cmd)
 
