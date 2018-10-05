@@ -3,15 +3,13 @@
 A simple package to run Drupal drush from Sublime Text editor.
 
 ## Screenshots
-<br/>
+
 ![Drush Insert Command](https://pictr.com/images/2018/10/05/06w2Jj.png)
-<br/>
+
 Open command bar with `alt`+`shift`+`d` (Windows)
-<br/>
-<br/>
-![Drush Results]
-(https://pictr.com/images/2018/10/05/06wsL2.png)
-<br/>
+
+![Drush Results](https://pictr.com/images/2018/10/05/06wsL2.png)
+
 Drush results
 
 For a complete list of drush commands, please visit the [official site](http://drush.ws/).
