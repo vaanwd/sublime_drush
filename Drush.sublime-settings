@@ -16,5 +16,7 @@
 
     "drush_args": "",
 
-    "remember_last_command": ""
+    "remember_last_command": "",
+
+    "exec_on_save_command": ""
 }

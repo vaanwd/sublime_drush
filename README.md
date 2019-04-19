@@ -38,12 +38,18 @@ Sublime Drush is a simple plugin that allows execution of drush commands from Su
 
 To use, you must enable input console with `alt` + `shift` + `d` (Win / Linux) or `shift` + `super` + `d` (Mac).
 
+Note: You may have to add a symlink if your drush command isn't installed to `/usr/bin/` or `/usr/sbin/`
+ * `sudo ln -s /path/to/your/drush /usr/bin/drush`
+
 From the Sublime menu `Preferences`->`Package Settings`->`Drush`->`Settings - User` you can set the path to drush utility and other arguments.
 
 For example you can set answer `"yes"` to all questions required by drush adding:
 
     "drush_args": "--yes",
 
+To run a command on save, add the following:
+    
+    "exec_on_save_command": "cc all"
 
 You can also set the arguments used by drush for each Sublime project accesed from Sublime menu `Project`->`Edit Project`.
 

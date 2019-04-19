@@ -74,7 +74,7 @@ class DrushCommand(sublime_plugin.TextCommand):
         uri = ''
 
       import shlex
-      command_splitted = shlex.split(str(drush + ' ' + drush_args + ' ' + drush_project_args + ' ' + text.replace('\\', '/') + ' ') + root + uri)
+      command_splitted = shlex.split(str(drush + ' ' + drush_project_args + ' ' + drush_args + ' ' + text.replace('\\', '/') + ' ') + root + uri)
 
       sublime.active_window().run_command('exec', {'cmd': command_splitted, "working_dir": self.path})
 
@@ -148,12 +148,53 @@ class DrushCommand(sublime_plugin.TextCommand):
       return sublime.active_window().project_data()
 
   def _get_drush_sup_args(self):
-    return self.SETTINGS.get('drush_args')
+    drush_args = self.SETTINGS.get('drush_args')
+    
+    if drush_args:
+      return drush_args
+    else:
+      return ''
 
   def _get_drush_sup_project_args(self):
     p_drush_args = self.getProjectJson()
-    if 'settings' in p_drush_args:
-      if 'Drush' in p_drush_args['settings']:
-        if 'drush_args' in p_drush_args['settings']['Drush']:
-          return p_drush_args['settings']['Drush']['drush_args']
+    if p_drush_args:
+      if 'settings' in p_drush_args:
+        if 'Drush' in p_drush_args['settings']:
+          if 'drush_args' in p_drush_args['settings']['Drush']:
+            return p_drush_args['settings']['Drush']['drush_args']
     return ''
+
+class DrushEvents(sublime_plugin.EventListener):
+  def on_post_save(self, view):
+    dc = DrushCommand(view)
+    save_cmd = dc.SETTINGS.get('exec_on_save_command')
+
+    if save_cmd != "":
+      drupal_dir = self._get_site_home_dir(view.file_name())
+
+      if drupal_dir != False:
+        shell_cmd = "%s --root='%s'" % (save_cmd, drupal_dir)
+        dc._runDrush(shell_cmd)
+
+        # show user the status message
+        sublime.status_message("Drush command executed: %s" % shell_cmd)
+
+  def _site_dir_info(self, file_path):
+    top_level_paths = ['sites', 'modules']
+    
+    for tl in top_level_paths:
+      index = file_path.find(tl)
+
+      if index > -1:
+        return (os.path.isfile(file_path[0:index] + 'authorize.php'), file_path[0:index])
+    
+    return (False, None)
+
+  def _get_site_home_dir(self, file_path):
+    info = self._site_dir_info(file_path)
+
+    # if the cwd is a drupal directory, return that directory
+    if info[0]:
+      return info[1]
+
+    return False
