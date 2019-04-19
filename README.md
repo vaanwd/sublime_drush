@@ -73,5 +73,3 @@ An example for **PROJECT.sublime-project**:
 
 **NOTE:** You should avoid introducing identical parameters in **Drush.sublime-settings** file and **PROJECT.sublime-project**
 to avoid incorrect operations.
-
-[&copy; 2012 Vaan Web Design](http://www.vaanwebdesign.ro)
